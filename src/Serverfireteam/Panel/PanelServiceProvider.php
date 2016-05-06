@@ -15,18 +15,18 @@ class PanelServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->publishes([
-            __DIR__.'/config/elfinder.php' => config_path('elfinder.php'),
-            ]);
+//        $this->publishes([
+//            __DIR__.'/config/elfinder.php' => config_path('elfinder.php'),
+//            ]);
 
         // register zofe\rapyd
         $this->app->register('Zofe\Rapyd\RapydServiceProvider');
 
         // 'Maatwebsite\Excel\ExcelServiceProvider'
-        $this->app->register('Maatwebsite\Excel\ExcelServiceProvider');
+//        $this->app->register('Maatwebsite\Excel\ExcelServiceProvider');
 
     	// Barryvdh\Elfinder\ElfinderServiceProvider
-        $this->app->register('Barryvdh\Elfinder\ElfinderServiceProvider');
+//        $this->app->register('Barryvdh\Elfinder\ElfinderServiceProvider');
         
 
         $this->app['router']->middleware('PanelAuth', 'Serverfireteam\Panel\libs\AuthMiddleware');
@@ -38,9 +38,9 @@ class PanelServiceProvider extends ServiceProvider
 
         // set config for Auth
 
-        \Config::set('auth.guards.panel',     ['driver'   => 'session','provider' => 'panel']);
-        \Config::set('auth.providers.panel',  ['driver'   => 'eloquent','model'   => \Serverfireteam\Panel\Admin::class]);
-        \Config::set('auth.passwords.panel',  ['provider' => 'panel','email'      => 'panelViews::resetPassword','table' => 'password_resets','expire' => 60]);
+//        \Config::set('auth.guards.panel',     ['driver'   => 'session','provider' => 'panel']);
+//        \Config::set('auth.providers.panel',  ['driver'   => 'eloquent','model'   => \Serverfireteam\Panel\Admin::class]);
+//        \Config::set('auth.passwords.panel',  ['provider' => 'panel','email'      => 'panelViews::resetPassword','table' => 'password_resets','expire' => 60]);
         
         /*
          * Create aliases for the dependency.
@@ -48,7 +48,7 @@ class PanelServiceProvider extends ServiceProvider
         $loader = AliasLoader::getInstance();
         $loader->alias('Form', 'Collective\Html\FormFacade');
         $loader->alias('Html', 'Collective\Html\HtmlFacade');
-        $loader->alias('Excel', 'Maatwebsite\Excel\Facades\Excel');
+//        $loader->alias('Excel', 'Maatwebsite\Excel\Facades\Excel');
 
         $this->app['panel::install'] = $this->app->share(function()
         {

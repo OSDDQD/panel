@@ -1,19 +1,20 @@
 <?php
 
-Route::group(array('prefix' => 'panel', 'middleware' => ['web','PanelAuth']), function()
-{
+Route::group([
+    'prefix' => 'panel',
+    'middleware' => ['web','PanelAuth']
+], function() {
 	// main page for the admin section (app/views/admin/dashboard.blade.php)
-
-	Route::get('/', function(){
-
-
+	Route::get('/', function()
+    {
         $version = '';
         try
         {
             $composer_lock = json_decode(File::get(base_path().'/composer.lock'),true);
-            foreach($composer_lock['packages'] as $key=>$value){
-                if($value['name'] =="serverfireteam/panel")
-                    $version =  $value['version'];
+            foreach($composer_lock['packages'] as $key => $value)
+            {
+                if($value['name'] == "serverfireteam/panel")
+                    $version = $value['version'];
             }
         }
         catch (Exception $exception)
