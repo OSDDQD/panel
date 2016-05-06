@@ -8,7 +8,7 @@ class ProfileController extends Controller {
 
     public function getEdit() {
 
-	   $admin = Admin::find(\Auth::guard('panel')->user()->id);
+	   $admin = \Auth::guard('panel')->user();
 
        $demo = false;
        if (\Config::get('panel.demo') == true) {
@@ -25,7 +25,7 @@ class ProfileController extends Controller {
 		$demo = true;
         }
 
-        $admin  = Admin::find(\Auth::guard('panel')->user()->id);
+        $admin  = \Auth::guard('panel')->user();
         $inputs = Input::all();
         $admin->update($inputs);
         $admin->save();

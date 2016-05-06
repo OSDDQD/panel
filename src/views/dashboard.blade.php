@@ -42,11 +42,6 @@
 
 
             </div>
-            <div class="row hide update">
-                <div class="alert alert-warning" role="alert">
-                    <a href="http://laravelpanel.com/docs/master/update" class="alert-link"></a>
-                </div>
-            </div>
 
 <script>
     $(function(){
@@ -58,14 +53,6 @@
             $(this).find('.pull-right .add').addClass('panel-'+color[pointer]);
             pointer++;
         })
-        // check for update of laravelpanel 
-        $.getJSON( "http://api.laravelpanel.com/checkupdate/{{ $version }}", function( data ) {
-          if(data.needUpdate){
-            $(".update a").text(data.text);
-            $(".update").removeClass('hide');
-          }
-        })
-        
     })
 </script>
 @stop            

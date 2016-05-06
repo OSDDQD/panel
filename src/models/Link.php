@@ -1,11 +1,11 @@
 <?php
 namespace Serverfireteam\Panel;
 
-use Illuminate\Database\Eloquent\Model;
+use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
-class Link extends Model {
+class Link extends Eloquent {
 
-    protected $table = 'links';
+    protected $collection = 'links';
 
     static $cache = [];
 
@@ -22,7 +22,7 @@ class Link extends Model {
 
         if (!isset(self::$cache['all_urls']) || $forceRefresh) {
             $configs = Link::allCached($forceRefresh);
-            self::$cache['all_urls'] =  $configs->pluck('url')->toArray();
+            self::$cache['all_urls'] =  $configs->pluck(['url', 'model'])->toArray();
         }
 
         return self::$cache['all_urls'];
@@ -39,20 +39,13 @@ class Link extends Model {
     }
 
 
-    public function getAndSave($url, $display){
+    public function getAndSave($url, $display, $model){
         $this->url = $url;
         $this->display = $display;
+        $this->model = $model;
         $this->save();
     }
 
-
-    protected $fillable = array('url', 'display');
-
-
-// //get roles user
-//     public function role()
-//     {
-//         return $this->hasOne('Models\Role');
-//     }
+    protected $fillable = array('url', 'display', 'main', 'model');
     
 }

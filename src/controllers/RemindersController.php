@@ -111,15 +111,15 @@ class RemindersController extends Controller {
      ********/
 	public function postChangePassword() {
 
-        $user 		 = Admin::find(\Auth::guard('panel')->user()->id);
+        $user 		 = \Auth::guard('panel')->user();
         $password 	 = Input::only('current_password');
         $new_password    = Input::only('password');
         $retype_password = Input::only('password_confirmation');
         $user_password   = \Auth::guard('panel')->user()->password;
-
         //Check to see if user enters current password correctly
         if (\Hash::check($password['current_password'], $user_password)) {
             if ($new_password['password'] == $retype_password['password_confirmation']) {
+                    dd(\Hash::make($new_password['password']));
                     $user->password = \Hash::make($new_password['password']);
                     $user->save();
                     return \Redirect::to('/panel/changePassword')->with('message', 'Successfully Changed Your Password!!');

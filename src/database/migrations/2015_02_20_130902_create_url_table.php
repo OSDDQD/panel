@@ -12,21 +12,18 @@ class CreateUrlTable extends Migration {
 	 */
 	public function up()
 	{
-            Schema::create('links', function($table)
-             {
-                     $table->increments('id');
-                     $table->string('display');
-                     $table->string('url');
-                     $table->timestamps();
-                     // We'll need to ensure that MySQL uses the InnoDB engine to
-                     // support the indexes, other engines aren't affected.
-                     $table->engine = 'InnoDB';                     
-            });
-	
-	Serverfireteam\Panel\Link::create(array(
-                'display' => 'Links',
-                'url' =>  'Link'
-            ));
+        Schema::create('links', function($table)
+         {
+                 $table->string('display');
+                 $table->string('url');
+                 $table->boolean('main')->nullable();
+                 $table->timestamps();
+        });
+
+        Serverfireteam\Panel\Link::create(array(
+            'display' => 'Links',
+            'url' =>  'Link'
+        ));
 
 	}
 
@@ -37,7 +34,7 @@ class CreateUrlTable extends Migration {
 	 */
 	public function down()
 	{
-            Schema::drop('links');
+        Schema::drop('links');
 	}
 
 }

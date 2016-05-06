@@ -2,11 +2,7 @@
 
 namespace Serverfireteam\Panel\libs;
 
-use Lang;
 use Closure;
-use Gate;
-
-use Serverfireteam\Panel\Admin;
 
 class PermissionCheckMiddleware
 {
@@ -19,34 +15,16 @@ class PermissionCheckMiddleware
      */
     
     protected $app;
+
     public function handle($request, Closure $next)
-    {   
+    {
+        $admin = \Auth::guard('panel')->user();
 
-        $admin= Admin::find((\Auth::guard('panel')->user()->id));
-        
-        $urlSegments   = $request->segments();
-
-        if ($admin->hasRole('super')){
-
+        if ($admin->is_admin)
+        {
             return $next($request);
-        }else{
-            if (key_exists(2 , $urlSegments)){
-
-                $PermissionToCheck = $urlSegments[1].$urlSegments[2];
-
-                if($admin->hasPermission($PermissionToCheck)){
-
-                    return $next($request);
-                }else{
-                    /**
-                     * Show Access denied page to User
-                     */
-                    
-                    abort(403);
-                }
-            }
-            return $next($request);
-
+        } else {
+            abort(403);
         }
 
     }

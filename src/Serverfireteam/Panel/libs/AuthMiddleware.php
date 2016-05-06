@@ -25,6 +25,13 @@ class AuthMiddleware
                 ->with('mesType', 'message');
         }
 
+        if (!\Auth::guard('panel')->user()->is_admin) {
+            $message = session('message', Lang::get('panel::fields.enterEmail'));
+            return redirect('/panel/login')
+                ->with('message', $message)
+                ->with('mesType', 'message');
+        }
+
         return $next($request);
     }
 }

@@ -20,6 +20,7 @@ class AuthController extends Controller {
                 'email' 	=> Input::get('email'),
                 'password' 	=> Input::get('password')
         );
+
         // attempt to do the login
         if (\Auth::guard('panel')->attempt($userdata,filter_var(Input::get('remember'), FILTER_VALIDATE_BOOLEAN))) {
             return \Redirect::to('panel');

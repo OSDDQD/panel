@@ -29,8 +29,7 @@ class dashboard
 
         // Make Dashboard Items
         foreach ($config as $value) {
-
-    	    $modelName = $value['url'];
+    	    $modelName = $value['model'];
 
             if ( in_array($modelName, self::$urls)) {
                $model = "Serverfireteam\\Panel\\".$modelName;

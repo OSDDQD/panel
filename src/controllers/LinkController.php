@@ -20,7 +20,8 @@ class LinkController extends CrudController {
         $this->grid = \DataGrid::source($this->filter);
         $this->grid->add('id', 'ID', true)->style("width:100px");
         $this->grid->add('display', 'Display');
-        $this->grid->add('url', 'Model');
+        $this->grid->add('url', 'Url');
+        $this->grid->add('model', 'Model');
 
         $this->addStylesToGrid();
 
@@ -36,7 +37,7 @@ class LinkController extends CrudController {
         Link::creating(function($link)
         {
             $appHelper = new libs\AppHelper();
-            return ( class_exists( $appHelper->getNameSpace() . $link['url'] ));
+            return ( class_exists( $appHelper->getNameSpace() . $link['model'] ));
         });
 
         $helpMessage = \Lang::get('panel::fields.links_help');
@@ -45,6 +46,7 @@ class LinkController extends CrudController {
         $this->edit->link("rapyd-demo/filter", "Articles", "TR")->back();
         $this->edit->add('display', 'Display', 'text')->rule('required');
         $this->edit->add('url', 'link', 'text')->rule('required');
+        $this->grid->add('model', 'Model', 'text')->rule('required');;
 
         $this->edit->saved(function () use ($entity) {
            $this->edit->message(\Lang::get('panel::fields.dataSavedSuccessfull'));
